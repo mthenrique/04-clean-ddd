@@ -1,21 +1,21 @@
-import { randomUUID } from "node:crypto";
+import { randomUUID } from 'node:crypto'
 
 export class UniqueEntityId {
-  private readonly id: string;
+  private readonly id: string
 
   constructor(id?: string) {
-    this.id = id ?? this.generateUniqueId();
+    this.id = id ?? this.generateUniqueId()
   }
 
   private generateUniqueId(): string {
-    return randomUUID();
+    return randomUUID()
   }
 
   public toString(): string {
-    return this.id;
+    return this.id
   }
 
   public toValue(): string {
-    return this.id;
+    return this.id
   }
 }
