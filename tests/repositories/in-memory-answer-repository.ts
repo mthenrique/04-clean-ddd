@@ -1,3 +1,4 @@
+import { IPaginationParams } from '@/core/repositories/i-pagination-params'
 import { AnswerRepository } from '@/domain/forum/application/repositories/answer-repositories'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
@@ -12,6 +13,16 @@ export class InMemoryAnswerRepository implements AnswerRepository {
     }
 
     return answer
+  }
+
+  async findAllByQuestionId(
+    questionId: string,
+    { page }: IPaginationParams,
+  ): Promise<Answer[]> {
+    return this.items
+      .filter((item) => item.questionId.toString() === questionId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * 20, page * 20)
   }
 
   async create(answer: Answer): Promise<void> {
