@@ -3,12 +3,12 @@ import { Comment, ICommentProps } from './comment'
 import { Optional } from '@/core/types/optional'
 
 export interface IQuestionCommentProps extends ICommentProps {
-  answerId: UniqueEntityId
+  questionId: UniqueEntityId
 }
 
 export class QuestionComment extends Comment<IQuestionCommentProps> {
-  get answerId() {
-    return this.props.answerId
+  get questionId() {
+    return this.props.questionId
   }
 
   static create(
