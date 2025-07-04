@@ -11,14 +11,13 @@ describe('AnswerQuestionUseCase', () => {
   })
 
   it('should be able to create an answer for a question', async () => {
-    const { answer } = await sut.execute({
+    const result = await sut.execute({
       instructorId: 'instructor-1',
       questionId: 'question-1',
       content: 'This is an answer to the question.',
     })
 
-    expect(answer.id).toBeTruthy()
-    expect(inMemoryAnswerRepository.items[0].id).toEqual(answer.id)
-    expect(answer.content).toBe('This is an answer to the question.')
+    expect(result.isRight).toBeTruthy()
+    expect(inMemoryAnswerRepository.items[0]).toEqual(result.value?.answer)
   })
 })

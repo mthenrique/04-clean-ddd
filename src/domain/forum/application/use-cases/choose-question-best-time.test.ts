@@ -4,6 +4,7 @@ import { InMemoryAnswerRepository } from 'tests/repositories/in-memory-answer-re
 import { makeQuestion } from 'tests/factories/make-question'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'tests/factories/make-answer'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let sut: ChooseQuestionBestAnswerUseCase
 let inMemoryQuestionRepository: InMemoryQuestionRepository
@@ -61,11 +62,12 @@ describe('ChooseQuestionBestTimeUseCase', () => {
     )
     await inMemoryAnswerRepository.create(answer)
 
-    await expect(() =>
-      sut.execute({
-        authorId: 'author-2',
-        answerId: answer.id.toString(),
-      }),
-    ).rejects.toThrow('Not allowed to choose this answer as best')
+    const result = await sut.execute({
+      authorId: 'author-2',
+      answerId: answer.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

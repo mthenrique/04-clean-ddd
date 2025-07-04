@@ -22,12 +22,12 @@ describe('ListRecentQuestionsUseCase', () => {
       makeQuestion({ createdAt: new Date(2022, 0, 23) }),
     )
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
     })
 
-    expect(questions).toHaveLength(3)
-    expect(questions[0].createdAt).toEqual(new Date(2023, 0, 20))
+    expect(result.value?.questions).toHaveLength(3)
+    expect(result.value?.questions[0].createdAt).toEqual(new Date(2023, 0, 20))
   })
 
   it('should be able to list recent questions with pagination', async () => {
@@ -35,10 +35,10 @@ describe('ListRecentQuestionsUseCase', () => {
       await inMemoryQuestionRepository.create(makeQuestion())
     }
 
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
     })
 
-    expect(questions).toHaveLength(2)
+    expect(result.value?.questions).toHaveLength(2)
   })
 })

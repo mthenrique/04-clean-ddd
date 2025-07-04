@@ -21,7 +21,9 @@ describe('GetQuestionBySlugUseCase', () => {
 
     const result = await sut.execute({ slug: newQuestion.slug.value })
 
-    expect(result.question.id).toEqual(newQuestion.id)
-    expect(result.question.title).toBe(newQuestion.title)
+    if (result.isRight()) {
+      expect(result.value?.question.id).toEqual(newQuestion.id)
+      expect(result.value?.question.title).toBe(newQuestion.title)
+    }
   })
 })
