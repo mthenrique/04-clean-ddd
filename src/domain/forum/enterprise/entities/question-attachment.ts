@@ -1,7 +1,7 @@
 import { BaseEntity } from '@/core/entities/base-entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
-interface IQuestionAttachmentProps {
+export interface IQuestionAttachmentProps {
   questionId: UniqueEntityId
   attachmentId: UniqueEntityId
 }
