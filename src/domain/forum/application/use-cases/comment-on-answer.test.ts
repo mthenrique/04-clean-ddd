@@ -3,15 +3,21 @@ import { CommentOnAnswerUseCase } from './comment-on-answer'
 import { InMemoryAnswerRepository } from 'tests/repositories/in-memory-answer-repository'
 import { makeAnswer } from 'tests/factories/make-answer'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryAnswerAttachmentsRepository } from 'tests/repositories/in-memory-answer-attachments-repository'
 
 describe('CommentOnAnswerUseCase', () => {
   let inMemoryAnswerCommentRepository: InMemoryAnswerCommentRepository
+  let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
   let inMemoryAnswerRepository: InMemoryAnswerRepository
   let sut: CommentOnAnswerUseCase
 
   beforeEach(() => {
     inMemoryAnswerCommentRepository = new InMemoryAnswerCommentRepository()
-    inMemoryAnswerRepository = new InMemoryAnswerRepository()
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentsRepository,
+    )
     sut = new CommentOnAnswerUseCase(
       inMemoryAnswerRepository,
       inMemoryAnswerCommentRepository,

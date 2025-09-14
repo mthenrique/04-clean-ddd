@@ -2,13 +2,19 @@ import { ListQuestionAnswersUseCase } from './list-question-answers'
 import { makeAnswer } from 'tests/factories/make-answer'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { InMemoryAnswerRepository } from 'tests/repositories/in-memory-answer-repository'
+import { InMemoryAnswerAttachmentsRepository } from 'tests/repositories/in-memory-answer-attachments-repository'
 
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswerRepository: InMemoryAnswerRepository
 let sut: ListQuestionAnswersUseCase
 
 describe('ListQuestionAnswersUseCaseUseCase', () => {
   beforeEach(() => {
-    inMemoryAnswerRepository = new InMemoryAnswerRepository()
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryAnswerRepository = new InMemoryAnswerRepository(
+      inMemoryAnswerAttachmentsRepository,
+    )
     sut = new ListQuestionAnswersUseCase(inMemoryAnswerRepository)
   })
 
